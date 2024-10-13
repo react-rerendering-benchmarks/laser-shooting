@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 export default function Camera() {
-  console.log(window.globalCount++);
-  return <>
+  console.log(window.globalCount++)
+  return (
+    <>
       <Link to="/setting"> Setting</Link>
       Camera
-    </>;
+    </>
+  )
 }
 declare global {
   interface Window {
-    globalCount: number;
+    globalCount: number
   }
 }
-window.globalCount = 0;
+window.globalCount = window.globalCount || 0
