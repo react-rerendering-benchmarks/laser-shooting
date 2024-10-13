@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import Webcam from 'react-webcam';
 import { Box } from '@mui/material';
 const App = memo(function App() {
+  console.log(window.globalCount++);
   const webcamRef = useRef<Webcam>(null);
   const faceImgRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {

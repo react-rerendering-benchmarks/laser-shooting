@@ -9,6 +9,7 @@ import { useToggle, useUpdateEffect } from 'usehooks-ts';
 import { NumberInput } from '@mantine/core';
 const FPS = 60;
 export default memo(function Setting() {
+  console.log(window.globalCount++);
   const [open, _toggleOpen, setOpen] = useToggle(false);
   const {
     data,
@@ -43,7 +44,7 @@ export default memo(function Setting() {
         const result = (await window.electron.ipcRenderer.invoke('app.calib', {
           imageBase64,
           zAngle
-        }) as string);
+        })) as string;
         const image = new Image();
         image.onload = () => {
           const context = showRef.current?.getContext('2d');
@@ -73,10 +74,10 @@ export default memo(function Setting() {
             upper: [173, 255, 255]
           },
           zAngle
-        }) as {
+        })) as {
           result: string;
           detected: boolean;
-        });
+        };
         const image = new Image();
         image.onload = () => {
           const context = showRef.current?.getContext('2d');
@@ -176,7 +177,10 @@ export default memo(function Setting() {
             if (deviceData) {
               setDevice(deviceData);
             }
-          }} renderInput={params => <TextField {...params} label="Chọn thiết bị" />} loading={isLoading} disableClearable disabled={started} />
+          }} renderInput={params => {
+            console.log(window.globalCount++);
+            return <TextField {...params} label="Chọn thiết bị" />;
+          }} loading={isLoading} disableClearable disabled={started} />
             <Stack direction={'row'} spacing={3}>
               <TextField label="Khoảng cách bắn (m)" type={'number'} value={form.distance} onChange={ev => {
               setForm(form => ({
@@ -236,3 +240,9 @@ export default memo(function Setting() {
       </Stack>
     </Paper>;
 });
+declare global {
+  interface Window {
+    globalCount: number;
+  }
+}
+window.globalCount = 0;
