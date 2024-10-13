@@ -263,6 +263,5 @@ const colors = {
     800: '#9f1239',
     900: '#881337'
   }
-}
-
-export default colors
+};
+export default colors;
